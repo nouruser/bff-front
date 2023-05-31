@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import '../assets/Navbar.css';
 
 function Navbar() {
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
+  const history = useHistory();
 
   const handleClick = () => setClick(!click);
   const closeMobileMenu = () => setClick(false);
@@ -21,6 +22,11 @@ function Navbar() {
     showButton();
   }, []);
 
+  const handleLogout = () => {
+    // Perform logout logic here
+    history.push('/login');
+  };
+
   window.addEventListener('resize', showButton);
 
   return (
@@ -29,7 +35,7 @@ function Navbar() {
         <div className='navbar-container'>
           <Link to='/' className='navbar-logo' onClick={closeMobileMenu}>
             BFF 
-            <i class='fab fa-typo3' />
+            <i className='fab fa-typo3' />
           </Link>
           <div className='menu-icon' onClick={handleClick}>
             <i className={click ? 'fas fa-times' : 'fas fa-bars'} />
@@ -61,7 +67,7 @@ function Navbar() {
             
             {button && (
               <li className='nav-item'>
-                <button > Déconnexion</button>
+                <button onClick={handleLogout}>Déconnexion</button>
               </li>
             )}
           </ul>

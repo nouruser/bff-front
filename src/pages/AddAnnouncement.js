@@ -5,18 +5,33 @@ const tailLayout = { wrapperCol: { offset: 8, span: 16 } };
 
 const AddAnnouncement = () => {
   const [componentSize, setComponentSize] = useState('default');
+  const [selectedProducts, setSelectedProducts] = useState([]);
+  const [productQuantities, setProductQuantities] = useState({});
 
   const onFormLayoutChange = ({ size }) => {
     setComponentSize(size);
   };
+
   const onReset = () => {
     formRef.current?.resetFields();
   };
+
   const { TextArea } = Input;
+
+  const handleProductChange = (value) => {
+    setSelectedProducts(value);
+  };
+
+  const handleQuantityChange = (productId, quantity) => {
+    setProductQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: quantity,
+    }));
+  };
 
   return (
     <>
-      <h2 style={{ color: '#1d557c', fontFamily: '', fontSize: '25px', alignItems: 'center', textAlign: 'center' }}>
+      <h2 style={{color: '#1d557c', fontFamily: 'Roboto', fontSize: '32px', marginBottom:'40px', textAlign:'center'}}>
         Créer une annonce :
       </h2>
       <Form
@@ -26,7 +41,7 @@ const AddAnnouncement = () => {
         initialValues={{ size: componentSize }}
         onValuesChange={onFormLayoutChange}
         size={componentSize}
-        style={{ maxWidth: 900, marginLeft: 30 }}
+        style={{ maxWidth: 900, marginLeft: 180, marginTop: 50 }}
       >
         <Form.Item label="Nom de l'annonce :" name="annonce" rules={[{ required: true }]}>
           <Input />
@@ -49,7 +64,7 @@ const AddAnnouncement = () => {
         </Form.Item>
 
         <Form.Item label="Produits" name="produits" rules={[{ required: true }]}>
-          <Select mode="multiple">
+          <Select mode="multiple" onChange={handleProductChange}>
             <Select.Option value="aliment1">Aliment1</Select.Option>
             <Select.Option value="aliment2">Aliment2</Select.Option>
             <Select.Option value="aliment3">Aliment3</Select.Option>
@@ -57,37 +72,29 @@ const AddAnnouncement = () => {
             <Select.Option value="aliment5">Aliment5</Select.Option>
             <Select.Option value="aliment6">Aliment6</Select.Option>
             <Select.Option value="aliment7">Aliment7</Select.Option>
-
           </Select>
         </Form.Item>
 
-        {/* <Form.Item label="Cascader" name="cascader" rules={[{ required: true }]}>
-          <Cascader
-            options={[
-              {
-                value: 'zhejiang',
-                label: 'Zhejiang',
-                children: [
-                  {
-                    value: 'hangzhou',
-                    label: 'Hangzhou',
-                  },
-                ],
-              },
-            ]}
-          />
-        </Form.Item> */}
+        {selectedProducts.map((product) => (
+          <Form.Item label={`Quantité de ${product}`} key={product}>
+            <Input
+              type="number"
+              value={productQuantities[product] || ''}
+              onChange={(e) => handleQuantityChange(product, e.target.value)}
+            />
+          </Form.Item>
+        ))}
 
         <Form.Item label="Description :" name="description" rules={[{ required: true }]}>
           <TextArea rows={4} />
         </Form.Item>
 
-        <Form.Item label="Urgent" name="urgent" valuePropName="checked" rules={[{ required: true }]}>
+        <Form.Item label="Urgent" name="urgent" valuePropName="checked" >
           <Switch />
         </Form.Item>
 
         <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
+          <Button type="primary" htmlType="submit" style={{marginRight: '30px'}}>
             Créer
           </Button>
           <Button htmlType="button" onClick={onReset}>

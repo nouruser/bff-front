@@ -1,6 +1,7 @@
 import React from "react";
-import { BsArrowDownRight } from "react-icons/bs";
-import { Table } from 'antd';
+import Cards from '../components/Cards';
+import CounterBox from '../components/CounterBox';
+import { Col, Row, Statistic } from 'antd';
 
 const columns = [
   {
@@ -21,66 +22,38 @@ const columns = [
   },
 ];
 
-const data = [];
-for (let i = 0; i < 46; i++) {
-  data.push({
-    name: `Edward King ${i}`,
-    announcement: `L'annonce ${i}`,
-    offer: `L'offre proposé est ${i}`,
-    buttons: ``,
-  });
-}
 
-const Dashboard = () => {
+const Dashboard = () =>  {
   return(
+    <>
     <div>
-      <h3 className="mb-4 title">Dashboard</h3>
-      <div className="d-flex justify-content-between align-items-center gap-3">
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
-          <div>
-            <p className="desc">Total</p>
-            <h4 className="mb-0 sub-title">$1100</h4>
-          </div>
-          <div className="d-flex flex-column align-items-end">
-            <h6>
-              <BsArrowDownRight /> 32%
-            </h6>
-            <p className="mb-0  desc">Compared To April 2022</p>
-          </div>
-        </div>
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
-          <div>
-            <p className="desc">Total</p>
-            <h4 className="mb-0 sub-title">$1100</h4>
-          </div>
-          <div className="d-flex flex-column align-items-end">
-            <h6 className="red">
-              <BsArrowDownRight /> 32%
-            </h6>
-            <p className="mb-0  desc">Compared To April 2022</p>
-          </div>
-        </div>
-        <div className="d-flex justify-content-between align-items-end flex-grow-1 bg-white p-3 roudned-3">
-          <div>
-            <p className="desc">Total</p>
-            <h4 className="mb-0 sub-title">$1100</h4>
-          </div>
-          <div className="d-flex flex-column align-items-end">
-            <h6 className="green">
-              <BsArrowDownRight /> 32%
-            </h6>
-            <p className="mb-0 desc">Compared To April 2022</p>
-          </div>
-        </div>
-      </div>
+        <h3 className="mb-4 title" style={{ color: '#1d557c', textAlign: 'center', fontFamily: 'Roboto', fontSize: '32px' }}>
+          Bienvenue !
+        </h3>
 
-      <div className="mt-4">
-        <h3 className="mt-4"> Les offres récentes </h3>
-        <div>
-        <Table  columns={columns} dataSource={data} />
+        <div style={{ marginTop: '100px', textAlign: 'center' }}>
+          <Row gutter={16} style={{ marginBottom: '25px' }}>
+            <Col span={8}>
+              <div >
+              <CounterBox icon="fa-thumbs-o-up" counter={21} text="Nombre des annonces créées" colored={false} style={{ height: '140px' }}/>
+              </div>
+            </Col>
+            <Col span={8}>
+              <div >
+              <CounterBox icon="fa-group" counter={32} text="Nombre de consultations" colored={false} />
+              </div>
+            </Col>
+            <Col span={8}>
+              <div >
+              <CounterBox icon="fa-shopping-cart" counter={9} text="Nombre d'offres proposées" colored={false} />
+              </div>
+            </Col>
+          </Row>
         </div>
+
+        <Cards />
       </div>
-    </div>
+    </>
 );
 }
 

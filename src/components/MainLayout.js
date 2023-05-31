@@ -9,16 +9,27 @@ import {  Outlet, useNavigate } from 'react-router-dom';
 import {BsListCheck} from 'react-icons/bs';
 import {FaClipboardList} from 'react-icons/fa';
 import { IoMdNotificationsOutline } from 'react-icons/io';
-
+import UserProfil from '../pages/UserProfil';
+import Navbar from './Navbar';
 
 const { Header, Sider, Content } = Layout;
 
 const MainLayout = () => {
   const [collapsed, setCollapsed] = useState(false);
   const { token: { colorBgContainer }, } = theme.useToken();
-  const navigate= useNavigate();
+  const [visible, setVisible] = useState(false);
+
+  const navigate = useNavigate();
+  const handleButtonClick1 = () => {
+    navigate('../assocbff/profil'); 
+  };
+  const handleButtonClick2 = () => {
+    navigate('../assocbff/offer-list'); 
+  };
+  
   return (
     <>
+      <Navbar/>
       <Layout> 
       <Sider trigger={null} collapsible collapsed={collapsed}>
         <Menu theme="dark" mode="inline" defaultSelectedKeys={['']}
@@ -40,7 +51,7 @@ const MainLayout = () => {
                 {
                   key: 'add-announcement',
                   icon: <MdCreate className='fs-4' />,
-                  label: 'Ajouter une annonce',
+                  label: 'Créer une annonce',
                 },
                 {
                   key: 'announcement-list',
@@ -82,12 +93,14 @@ const MainLayout = () => {
             type='text'
             icon= {<IoMdNotificationsOutline/>}
             style={{ fontSize: '16px', width: 64, height: 64, marginLeft: '80%' }}
+            onClick={handleButtonClick2}
           />
 
           <Button 
              type="text"
              icon={collapsed ? <CgProfile /> : <CgProfile />}
-             style={{ fontSize: '16px', width: 64, height: 64 }}/>
+             style={{ fontSize: '16px', width: 64, height: 64 }}
+             onClick={handleButtonClick1}/>
         </Header>
         <Content
           style={{
@@ -102,6 +115,7 @@ const MainLayout = () => {
       </Layout>
     </Layout>
 
+    
     <Footer/>
     </>
   );
